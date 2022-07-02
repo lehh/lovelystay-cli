@@ -9,17 +9,21 @@
   "scripts": {
     "prettier": "npx prettier -c src",
     "build": "npx tsc",
-    "lovelystay": "node ./dist/index.js"
+    "lovelystay": "node ./dist/index.js",
+    "migrate": "npx node-pg-migrate --tsconfig ./tsconfig.json -d DB_URL"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.1",
+    "node-pg-migrate": "^6.2.2",
     "pg-promise": "^10.11.1"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
     "prettier": "^2.7.1",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "ts-node": "^10.8.1"
   }
 }

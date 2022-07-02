@@ -15,7 +15,11 @@ Run `npm run build` to build the js files.
 
 (optional) Run `docker-compose up -d` to start the postgres database.
 
-Run `cp .env.example .env` and configure the environment variables in the `.env` file as you wish.
+Run `cp .env.example .env`.
+
+Create the database on postgres and configure the connection string in the `.env` file.
+
+Run the migrations with the command `npm run migrate up`.
 
 ## Usage
 
