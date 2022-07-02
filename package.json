@@ -1,0 +1,25 @@
+{
+  "name": "lovelystay-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "bin": {
+    "lovelystay": "./dist/index.js"
+  },
+  "scripts": {
+    "prettier": "npx prettier -c src",
+    "build": "npx tsc",
+    "lovelystay": "node ./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pg-promise": "^10.11.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  }
+}
