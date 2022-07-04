@@ -15,16 +15,16 @@ export const getUser = async (
       login,
       name,
       location,
-      html_url: url,
-      created_at: createdAt,
+      html_url,
+      created_at,
     } = await response.data;
 
     return {
       login,
       name,
       location,
-      url,
-      createdAt,
+      html_url,
+      created_at,
     };
   } catch (err: any) {
     return;
