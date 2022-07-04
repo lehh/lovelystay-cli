@@ -5,7 +5,7 @@ import { IntegrationUser } from './integration-user.type';
 const { GIT_API_URL } = process.env;
 const BASE_URL = `${GIT_API_URL}/users`;
 
-export const fetchUser = async (
+export const getUser = async (
   username: string
 ): Promise<IntegrationUser | undefined> => {
   try {
@@ -31,7 +31,7 @@ export const fetchUser = async (
   }
 };
 
-export const fetchUserRepos = async (
+export const getUserRepos = async (
   username: string
 ): Promise<IntegrationUserRepo[] | undefined> => {
   try {
