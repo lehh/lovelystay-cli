@@ -1,36 +1,72 @@
-import { getUser } from '../integration/users';
-import { findByLogin, insert } from './user.repository';
+import { getUser, getUserRepos } from '../integration/users';
+import {
+  findByLogin,
+  insert,
+  insertManyUserLanguages,
+} from './user.repository';
 
 export const fetchUser = async (username: string): Promise<void> => {
-  const integrationUser = await getUser(username);
+  try {
+    const integrationUser = await getUser(username);
 
-  if (!integrationUser) {
-    console.log('User not found');
+    if (!integrationUser) {
+      console.log('User not found');
+      return;
+    }
+
+    const {
+      login,
+      name,
+      location,
+      html_url: url,
+      created_at: createdAt,
+    } = integrationUser;
+
+    const existingUser = await findByLogin(login);
+
+    if (existingUser) {
+      console.log(`User ${username} was already fetched previously`);
+      return;
+    }
+
+    const user = await insert({
+      login,
+      name,
+      location,
+      url,
+      createdAt,
+    });
+
+    if (!user.id) return;
+
+    await fetchUserRepos(username, user.id);
+
+    console.log(`User ${username} successfully fetched`);
+  } catch (err) {
+    console.log(`An error occurred while fetching ${username} user`);
+  }
+};
+
+const fetchUserRepos = async (
+  username: string,
+  userId: number
+): Promise<void> => {
+  const userRepos = await getUserRepos(username);
+
+  if (!userRepos) {
+    console.log(`User ${username} doesn't have repositories to be fetched`);
     return;
   }
 
-  const {
-    login,
-    name,
-    location,
-    html_url: url,
-    created_at: createdAt,
-  } = integrationUser;
+  const languages = userRepos.reduce((prev, repo) => {
+    if (!repo.language) return prev;
 
-  const existingUserId = await findByLogin(login);
+    prev.push(repo.language);
 
-  if (existingUserId) {
-    console.log(`User ${username} was already fetched previously`);
-    return;
-  }
+    return prev;
+  }, [] as string[]);
 
-  await insert({
-    login,
-    name,
-    location,
-    url,
-    createdAt
-  });
+  const languagesSet = new Set(languages);
 
-  console.log(`User ${username} successfully fetched`);
+  insertManyUserLanguages(userId, Array.from(languagesSet));
 };

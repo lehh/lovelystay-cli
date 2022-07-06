@@ -6,3 +6,9 @@ export type User = {
   url: string;
   createdAt: Date;
 };
+
+export type UserLanguage = {
+  id?: number;
+  userId: number;
+  language: string;
+};
