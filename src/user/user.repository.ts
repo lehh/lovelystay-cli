@@ -76,3 +76,18 @@ export const findAllByLocation = async (location: string): Promise<User[]> => {
 
   return users;
 };
+
+export const findAllByLanguage = async (language: string): Promise<User[]> => {
+  const dbConnection = buildConnection();
+
+  const users = await dbConnection.any(
+    `
+    SELECT u.* FROM users u
+    JOIN users_languages ul on ul.user_id = u.id
+    WHERE ul.language ILIKE $1
+  `,
+    '%' + language + '%'
+  );
+
+  return users;
+}
