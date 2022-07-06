@@ -29,6 +29,21 @@ OR
 
 run `npm run lovelystay` directly.
 
+### Valid commands are:
+```bash
+help
+fetch user <username>
+find all users
+find users by location <location>
+find users by language <programming_language>
+```
+
+### Example
+
+`find users by language javascript`
+
+`find users by location portugal`
+
 ## Uninstalling
 
 If you installed the cli globally, just run `npm remove -g lovelystay-cli`.
