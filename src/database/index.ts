@@ -14,6 +14,7 @@ export const buildConnection = (): IDatabase<{}, IClient> => {
 
   const databaseConfig: IConnectionParameters = {
     connectionString: DB_URL,
+    allowExitOnIdle: true,
   };
 
   db = pgp(databaseConfig);
