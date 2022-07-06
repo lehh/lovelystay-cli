@@ -40,9 +40,9 @@ find users by language <programming_language>
 
 ### Example
 
-`find users by language javascript`
+`lovelystay find users by language javascript`
 
-`find users by location portugal`
+`lovelystay find users by location portugal`
 
 ## Uninstalling
 
