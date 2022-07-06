@@ -1,6 +1,7 @@
 import { getUser, getUserRepos } from '../integration/users';
 import {
   findAll,
+  findAllByLocation,
   findByLogin,
   insert,
   insertManyUserLanguages,
@@ -79,5 +80,15 @@ export const getAll = async (): Promise<void> => {
     console.log(JSON.stringify(users, null, 2));
   } catch (err) {
     console.log(`An error occurred while retrieving users`);
+  }
+}
+
+export const getAllFromLocation = async (location: string) => {
+  try {
+    const users = await findAllByLocation(location);
+
+    console.log(JSON.stringify(users, null, 2));
+  } catch (err) {
+    console.log(`An error occurred while retrieving users by location`);
   }
 }

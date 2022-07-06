@@ -63,3 +63,16 @@ export const findAll = async (): Promise<User[]> => {
 
   return users;
 };
+
+export const findAllByLocation = async (location: string): Promise<User[]> => {
+  const dbConnection = buildConnection();
+
+  const users = await dbConnection.any(
+    `
+    SELECT * FROM users WHERE location ILIKE $1
+  `,
+    '%' + location + '%'
+  );
+
+  return users;
+};
