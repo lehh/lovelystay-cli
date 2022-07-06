@@ -4,7 +4,11 @@ import {
   IConnectionParameters,
 } from 'pg-promise/typescript/pg-subset';
 
+let db: IDatabase<{}, IClient>;
+
 export const buildConnection = (): IDatabase<{}, IClient> => {
+  if (db) return db;
+
   const { DB_URL } = process.env;
   const pgp = pgPromise();
 
@@ -12,5 +16,7 @@ export const buildConnection = (): IDatabase<{}, IClient> => {
     connectionString: DB_URL,
   };
 
-  return pgp(databaseConfig);
+  db = pgp(databaseConfig);
+
+  return db;
 };
