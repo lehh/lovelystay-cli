@@ -1,4 +1,4 @@
-import { fetchUser } from './user/user.service';
+import { fetchUser, getAll } from './user/user.service';
 
 export const help = (): void => {
   console.log(`
@@ -6,6 +6,7 @@ export const help = (): void => {
 
     help
     fetch user <username>
+    find all users
   `);
 };
 
@@ -14,10 +15,11 @@ export const commands = {
   fetch: {
     user: fetchUser,
   },
-  // find: {
-  //   all: {
-  //     users: {},
-  //   },
+  find: {
+    all: {
+      users: getAll,
+    },
+  }
   //   users: {
   //     by: {
   //       location: {},

@@ -35,20 +35,31 @@ export const insertManyUserLanguages = async (
 ): Promise<void> => {
   const dbConnection = buildConnection();
 
-  await dbConnection.tx((transaction) => {
-
-    const query = languages.map((language) => {
-      return transaction.none(
-        `
+  await dbConnection
+    .tx((transaction) => {
+      const query = languages.map((language) => {
+        return transaction.none(
+          `
         INSERT INTO users_languages(user_id, language)
         VALUES ($1, $2)
       `,
-        [userId, language]
-      );
-    });
+          [userId, language]
+        );
+      });
 
-    transaction.batch(query);
-  }).catch((err) => {
-    console.log(err);
-  });
+      transaction.batch(query);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const findAll = async (): Promise<User[]> => {
+  const dbConnection = buildConnection();
+
+  const users = await dbConnection.any(`
+    SELECT * FROM users
+  `);
+
+  return users;
 };

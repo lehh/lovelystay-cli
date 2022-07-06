@@ -1,5 +1,6 @@
 import { getUser, getUserRepos } from '../integration/users';
 import {
+  findAll,
   findByLogin,
   insert,
   insertManyUserLanguages,
@@ -70,3 +71,13 @@ const fetchUserRepos = async (
 
   insertManyUserLanguages(userId, Array.from(languagesSet));
 };
+
+export const getAll = async (): Promise<void> => {
+  try {
+    const users = await findAll();
+
+    console.log(JSON.stringify(users, null, 2));
+  } catch (err) {
+    console.log(`An error occurred while retrieving users`);
+  }
+}
