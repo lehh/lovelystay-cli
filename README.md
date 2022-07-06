@@ -29,7 +29,7 @@ OR
 
 run `npm run lovelystay` directly.
 
-### Valid commands are:
+### Valid commands
 ```bash
 help
 fetch user <username>
