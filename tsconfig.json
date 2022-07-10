@@ -8,6 +8,8 @@
     "skipLibCheck": true,
     "outDir": "./dist",
     "rootDir": "src",
-    "types": ["node"]
-  }
+    "types": ["node", "jest"],
+    "noImplicitAny": false
+  },
+  "exclude": ["node_modules", "migrations"]
 }

@@ -15,7 +15,11 @@ Run `npm run build` to build the js files.
 
 (optional) Run `docker-compose up -d` to start the postgres database.
 
-Run `cp .env.example .env` and configure the environment variables in the `.env` file as you wish.
+Run `cp .env.example .env`.
+
+Create the database on postgres and configure the connection string in the `.env` file.
+
+Run the migrations with the command `npm run migrate up`.
 
 ## Usage
 
@@ -24,6 +28,21 @@ You can either install de cli globally with `npm i -g` and use the `lovelystay` 
 OR
 
 run `npm run lovelystay` directly.
+
+### Valid commands
+```bash
+help
+fetch user <username>
+find all users
+find users by location <location>
+find users by language <programming_language>
+```
+
+### Example
+
+`lovelystay find users by language javascript`
+
+`lovelystay find users by location portugal`
 
 ## Uninstalling
 
