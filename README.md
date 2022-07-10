@@ -29,7 +29,7 @@ OR
 
 run `npm run lovelystay` directly.
 
-### Valid commands are:
+### Valid commands
 ```bash
 help
 fetch user <username>
@@ -40,9 +40,9 @@ find users by language <programming_language>
 
 ### Example
 
-`find users by language javascript`
+`lovelystay find users by language javascript`
 
-`find users by location portugal`
+`lovelystay find users by location portugal`
 
 ## Uninstalling
 
