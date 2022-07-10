@@ -7,9 +7,9 @@ export const findByLogin = async (login: string): Promise<User | null> => {
   const user = await dbConnection.oneOrNone(
     `
       SELECT id FROM users
-      WHERE login LIKE $1
+      WHERE login LIKE $(login)
   `,
-    login
+    { login }
   );
 
   return user;
@@ -22,10 +22,10 @@ export const insert = async (user: User): Promise<User> => {
   return dbConnection.one(
     `
       INSERT INTO users(login, name, location, url, created_at) 
-      VALUES ($1, $2, $3, $4, $5)
+      VALUES ($(login), $(name), $(location), $(url), $(createdAt))
       RETURNING id
     `,
-    [login, name, location, url, createdAt]
+    { login, name, location, url, createdAt }
   );
 };
 
@@ -35,23 +35,19 @@ export const insertManyUserLanguages = async (
 ): Promise<void> => {
   const dbConnection = buildConnection();
 
-  await dbConnection
-    .tx((transaction) => {
-      const query = languages.map((language) => {
-        return transaction.none(
-          `
+  await dbConnection.tx((transaction) => {
+    const query = languages.map((language) => {
+      return transaction.none(
+        `
         INSERT INTO users_languages(user_id, language)
-        VALUES ($1, $2)
+        VALUES ($(userId), $(language))
       `,
-          [userId, language]
-        );
-      });
-
-      transaction.batch(query);
-    })
-    .catch((err) => {
-      console.log(err);
+        { userId, language }
+      );
     });
+
+    transaction.batch(query);
+  });
 };
 
 export const findAll = async (): Promise<User[]> => {
@@ -69,9 +65,9 @@ export const findAllByLocation = async (location: string): Promise<User[]> => {
 
   const users = await dbConnection.any(
     `
-    SELECT * FROM users WHERE location ILIKE $1
+    SELECT * FROM users WHERE location ILIKE $(location)
   `,
-    '%' + location + '%'
+    { location: '%' + location + '%' }
   );
 
   return users;
@@ -84,10 +80,10 @@ export const findAllByLanguage = async (language: string): Promise<User[]> => {
     `
     SELECT u.* FROM users u
     JOIN users_languages ul on ul.user_id = u.id
-    WHERE ul.language ILIKE $1
+    WHERE ul.language ILIKE $(language)
   `,
-    '%' + language + '%'
+    { language: '%' + language + '%' }
   );
 
   return users;
-}
+};
